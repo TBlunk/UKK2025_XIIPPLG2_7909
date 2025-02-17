@@ -35,6 +35,40 @@ if ($_SESSION['status'] != 'login') {
         </div>
     </div>
 </nav>
+<div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mt-2">
+                    <div class="card-header">
+                        Tambah Categories
+                    </div>
+                    <div class="card-body">
+                        <form action="../config/aksi_categories.php" method="POST">
+                            <label class="form-label">Nama Categories</label>
+                            <input type="text" name="namaalbum" class="form-control" required>
+                            <label class="form-label">Deskripsi</label>
+                            <textarea name="deskripsi" class="form-control" required></textarea>
+                            <button type="submit" class="btn btn-info mt-2" name="tambah">Tambah Data</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col md-8">
+                <div class="card mt-2">
+                    <div class="card-header">Data Categories</div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Categories</th>
+                                    <th>Deskripsi</th>
+                                    <th>Tanggal</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            
 <footer class="d-flex justify-content-center border-top mt-3 bd-light fixed-bottom" >
     <p class="mt-3">&copy; UKK PPLG | Ridho Alfath N.</p>
 </footer>
