@@ -29,12 +29,9 @@
         <h1><i class="fa-solid fa-cloud text-success"></i></h1>
         <h1 class="text-left text-success"> Ubur-ubur Ikan Lele, <br> Login dan daftar Applikasi dikanan atas Le    <i class="fa-solid fa-arrow-trend-up"></i></h1>
     </div>
-    <!-- <div class="col-md-4 mt-5">
-        <h1 class="text-success">To <br> Do <br> List</h1>
-    </div> -->
 </div>
 <footer class="d-flex justify-content-center border-top mt-3 bd-light fixed-bottom" >
-    <p class="mt-3">&copy; UKK PPLG | Ridho Alfath N.</p>
+    <p class="mt-3">&copy; UKK PPLG 2025 | Ridho Alfath N.</p>
 </footer>
 
     <script src="view/js/bootstrap.min.js"></script>
