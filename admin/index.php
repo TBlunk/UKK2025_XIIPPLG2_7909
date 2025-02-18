@@ -1,15 +1,15 @@
 <?php 
 session_start();
 $userid = $_SESSION['userid'];
-$koneksi = mysqli_connect('localhost','root','','ukk_todolist');
 if ($_SESSION['status'] != 'login') {
     echo "<script>
     alert('Anda belum Login!');
     location.href='../index.php';
     </script>";
 }
+$koneksi = mysqli_connect('localhost','root','','ukk_todolist');
 
-if (isset($_POST['add_task'])) {
+if (isset($_POST['add_task2'])) {
     $tasks = $_POST['tasks'];
     $priority = $_POST['priority'];
     $due_date = $_POST['due_date'];
@@ -22,10 +22,24 @@ if (isset($_POST['add_task'])) {
     }
 }
 
+if (isset($_GET['complete'])) {
+    $id = $_GET['complete'];
+    mysqli_query($koneksi, "UPDATE task SET status=1 WHERE id=$id");
+    echo "<script>alert('Data Berhasil Diperbarui');</script>";
+    header('Location:index.php');
+}
+
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    mysqli_query($koneksi, "DELETE FROM task WHERE id=$id");
+    echo "<script>alert('Data Berhasil Dihapus');</script>";
+    header('Location:index.php');
+}
+
 $result = mysqli_query($koneksi,"SELECT * FROM task
 ORDER BY status ASC, priority DESC, due_date ASC");
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,19 +68,18 @@ ORDER BY status ASC, priority DESC, due_date ASC");
 <div class="container mt-2">
     <h1 class="text-center text-success">To Do List</h1>
     <form action="" method="POST" class="border rounded bg-info p-3 mb-3">
-        <label for="" class="form-label">Nama Task</label>
-        <input type="text" name="tasks" class="form-control" placeholder="Masukan Task Baru" autocomplete="off" autofocus required>
+    <label for="" class="form-label">Nama Task</label>
+    <input type="text" name="tasks" class="form-control" placeholder="Masukan Task Baru" autocomplete="off" autofocus required>
         <label class="form-label">Categories</label>
         <select name="categoriesid" class="form-control">
         <?php
+        $namacategory = $_POST['namacategory'];
         $categoriesid = $_POST['categoriesid'];
         $userid = $_SESSION['userid'];
         $sql_categories = mysqli_query($koneksi, "SELECT * FROM categories WHERE userid='$userid'");
         while ($data_categories = mysqli_fetch_array($sql_categories)) { ?>
-        <option <?php if($data_categories['categoriesid'] == $data['categoriesid'])
-        { ?> selected="selected" <?php } ?>     
-        value="<?php echo $data_categories['categoriesid'] ?>">
-                <?php echo $data_categories['namacategories'] ?>
+        <option value="<?php echo $data_categories['categoriesid'] ?>">
+                <?php echo $data_categories['namacategory'] ?>
             </option>
         <?php } ?>
         </select>
@@ -78,21 +91,20 @@ ORDER BY status ASC, priority DESC, due_date ASC");
             <option value="2">Penting</option>
             <option value="3">Sangat Penting</option>
         </select>
-
         <label for="" class="form-label">Tanggal</label>
         <input type="text" name="due_date" class="form-control"
         value="<?php echo date('Y-m-d') ?>" required>
-        <button type="submit" class="btn btn-success w-10 mt-3" name="add_task">Tambah</button>
+        <button type="submit" class="btn btn-success w-100 mt-2" name="add_task2">Tambah</button>
+    </form>
     </form>
 
     
 
-    <table class="table table-striped">
-        <thead class="table-info">
+    <table class="table table-striped table-info">
+        <thead>
             <tr>
                 <th>No</th>
                 <th>Task</th>
-                <th>Categories</th>
                 <th>Priority</th>
                 <th>Tanggal</th>
                 <th>Status</th>
@@ -107,9 +119,8 @@ ORDER BY status ASC, priority DESC, due_date ASC");
                 <tr>
                     <td><?php echo $no++; ?></td>
                     <td><?php echo $row['tasks']; ?></td>
-                    <td></td>
                     <td>
-                        <?php 
+                        <?php
                         if ($row['priority'] == 1) {
                             echo "Kurang Penting";
                         }elseif($row['priority'] == 2) {
@@ -120,28 +131,30 @@ ORDER BY status ASC, priority DESC, due_date ASC");
                         ?>
                     </td>
                     <td><?php echo $row['due_date']; ?></td>
-                    <td>
-                        <?php
+                    <td> <?php
                         if ($row['status'] == 0) {
                             echo "Belum Selesai";
                         }else{
                             echo "Selesai";
                         }
-                        ?>
-                    </td>
+                        ?></td>
                     <td>
                         <?php
                         if ($row['status'] == 0) { ?>
-                            <a href="?complete=<?php echo$row['id'] ?>" class="btn btn-success">Selesai</a>
-                            <?php }
-                            ?>
-                            <a href="?delete=<?php echo$row['id']?>" class="btn btn-secondary">Hapus</a>
+                        <a href="?complete=<?php echo$row['id'] ?>" class="btn btn-success">Selesai</a>
+                        <?php }
+                        ?>
+                        <a href="?delete=<?php echo$row['id']?>" class="btn btn-secondary">Hapus</a>
                     </td>
                 </tr>
-            <?php } 
+                <?php }
             }
             ?>
+            <tr>
+
+            </tr>
         </tbody>
+    </table>
 
 
 
