@@ -2,6 +2,7 @@
 session_start();
 $userid = $_SESSION['userid'];
 include '../config/koneksi.php';
+
 if ($_SESSION['status'] != 'login') {
     echo "<script>
     alert('Anda belum Login!');
@@ -28,14 +29,14 @@ if ($_SESSION['status'] != 'login') {
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse mt-2" id="navbarNav">
-        <div class="navbar-nav me-auto">
+        <div class="navbar-nav me-auto">          
             <a href="categories.php" class="nav-link text-light mb-2">Categories</a>           
         </div>
-            <a href="../config/aksi_logout.php" class="btn btn-outline-light btn-danger m-1">Keluar</a>
+            <a href="../config/aksi_logout.php" class="btn btn-outline-light btn-secondary m-1">Keluar</a>
         </div>
     </div>
 </nav>
-<div class="container">
+<div class="container mt-5">
         <div class="row">
             <div class="col-md-4">
                 <div class="card mt-2">
@@ -45,10 +46,10 @@ if ($_SESSION['status'] != 'login') {
                     <div class="card-body">
                         <form action="../config/aksi_categories.php" method="POST">
                             <label class="form-label">Nama Categories</label>
-                            <input type="text" name="namaalbum" class="form-control" required>
+                            <input type="text" name="namacategory" class="form-control" required>
                             <label class="form-label">Deskripsi</label>
                             <textarea name="deskripsi" class="form-control" required></textarea>
-                            <button type="submit" class="btn btn-info mt-2" name="tambah">Tambah Data</button>
+                            <button type="submit" class="btn btn-success mt-2" name="tambahct">Tambah Data</button>
                         </form>
                     </div>
                 </div>
@@ -68,6 +69,51 @@ if ($_SESSION['status'] != 'login') {
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <?php
+                                $no = 1;
+                                $userid = $_SESSION['userid'];
+                                $sql = mysqli_query($koneksi, "SELECT * FROM categories 
+                            WHERE userid='$userid'");
+                                while ($data = mysqli_fetch_array($sql)) {
+                                ?>
+                                    <tr>
+                                        <td><?php echo $no++ ?></td>
+                                        <td><?php echo $data['namacategory'] ?></td>
+                                        <td><?php echo $data['deskripsi'] ?></td>
+                                        <td><?php echo $data['tanggaldibuat'] ?></td>
+                                        <td>
+
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#hapus<?php echo $data['categoriesid'] ?>">
+                                                Hapus
+                                            </button>
+                                            <div class="modal fade" id="hapus<?php echo $data['categoriesid'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Hapus Data</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="../config/aksi_categories.php" method="POST">
+                                                                <input type="hidden" name="categoriesid" value="<?php echo $data['categoriesid'] ?>">
+                                                                Apakah anda yakin akan menghapus data <strong> <?php echo $data['namacategories'] ?>"
+                                                                </strong> ?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" name="hapus" class="btn btn-primary">Hapus Data</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                                </tbody>
+                        </table>
                             
 <footer class="d-flex justify-content-center border-top mt-3 bd-light fixed-bottom" >
     <p class="mt-3">&copy; UKK PPLG | Ridho Alfath N.</p>
