@@ -1,21 +1,27 @@
 <?php 
 session_start();
+include '../config/koneksi.php';
+$koneksi = mysqli_connect('localhost','root','','ukk_todolist');
 $userid = $_SESSION['userid'];
+
 if ($_SESSION['status'] != 'login') {
     echo "<script>
     alert('Anda belum Login!');
     location.href='../index.php';
     </script>";
 }
-$koneksi = mysqli_connect('localhost','root','','ukk_todolist');
 
-if (isset($_POST['add_task2'])) {
+
+if (isset($_POST['add_task'])) {
     $tasks = $_POST['tasks'];
     $priority = $_POST['priority'];
     $due_date = $_POST['due_date'];
+    $categoriesid = $_POST['categoriesid'];
+    $userid = $_SESSION['userid'];
 
     if (!empty($tasks) && !empty($priority) && !empty($due_date)) {
-        mysqli_query($koneksi,"INSERT INTO task VALUES('','$tasks','$priority','$due_date','0')");
+   
+        $sql = mysqli_query($koneksi, "INSERT INTO task VALUES('','$tasks','$priority','$due_date','0','$categoriesid','$userid')");
         echo "<script>alert('Data Berhasil Disimpan');</script>";
     }else{
         echo "<script>alert('Semua Kolom Harus Diisi!');</script>";
@@ -36,8 +42,14 @@ if (isset($_GET['delete'])) {
     header('Location:index.php');
 }
 
+
 $result = mysqli_query($koneksi,"SELECT * FROM task
 ORDER BY status ASC, priority DESC, due_date ASC");
+
+$leftjoin = mysqli_query($koneksi,"SELECT categories.namacategory, task.categoriesid
+FROM categories
+LEFT JOIN task ON categories.categoriesid = task.categoriesid
+ORDER BY categories.namacategories;")
 
 ?>
 <!DOCTYPE html>
@@ -94,7 +106,7 @@ ORDER BY status ASC, priority DESC, due_date ASC");
         <label for="" class="form-label">Tanggal</label>
         <input type="text" name="due_date" class="form-control"
         value="<?php echo date('Y-m-d') ?>" required>
-        <button type="submit" class="btn btn-success w-100 mt-2" name="add_task2">Tambah</button>
+        <button type="submit" class="btn btn-success w-100 mt-2" name="add_task">Tambah</button>
     </form>
     </form>
 
@@ -105,6 +117,7 @@ ORDER BY status ASC, priority DESC, due_date ASC");
             <tr>
                 <th>No</th>
                 <th>Task</th>
+                <th>Category</th>
                 <th>Priority</th>
                 <th>Tanggal</th>
                 <th>Status</th>
@@ -119,6 +132,7 @@ ORDER BY status ASC, priority DESC, due_date ASC");
                 <tr>
                     <td><?php echo $no++; ?></td>
                     <td><?php echo $row['tasks']; ?></td>
+                    <td></td>
                     <td>
                         <?php
                         if ($row['priority'] == 1) {
@@ -132,7 +146,7 @@ ORDER BY status ASC, priority DESC, due_date ASC");
                     </td>
                     <td><?php echo $row['due_date']; ?></td>
                     <td> <?php
-                        if ($row['status'] == 0) {
+                    if ($row['status'] == 0) {
                             echo "Belum Selesai";
                         }else{
                             echo "Selesai";
@@ -143,7 +157,7 @@ ORDER BY status ASC, priority DESC, due_date ASC");
                         if ($row['status'] == 0) { ?>
                         <a href="?complete=<?php echo$row['id'] ?>" class="btn btn-success">Selesai</a>
                         <?php }
-                        ?>
+                        ?>    
                         <a href="?delete=<?php echo$row['id']?>" class="btn btn-secondary">Hapus</a>
                     </td>
                 </tr>
