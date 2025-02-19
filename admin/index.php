@@ -42,14 +42,13 @@ if (isset($_GET['delete'])) {
     header('Location:index.php');
 }
 
-
 $result = mysqli_query($koneksi,"SELECT * FROM task
 ORDER BY status ASC, priority DESC, due_date ASC");
 
-$leftjoin = mysqli_query($koneksi,"SELECT categories.namacategory, task.categoriesid
+$leftjoin = mysqli_query($koneksi,"SELECT categories.'namacategory', task.'categoriesid'
 FROM categories
-LEFT JOIN task ON categories.categoriesid = task.categoriesid
-ORDER BY categories.namacategories;")
+LEFT JOIN task ON categories.'categoriesid' = task.'categoriesid'
+ORDER BY categories.'namacategories';")
 
 ?>
 <!DOCTYPE html>
@@ -108,7 +107,7 @@ ORDER BY categories.namacategories;")
         value="<?php echo date('Y-m-d') ?>" required>
         <button type="submit" class="btn btn-success w-100 mt-2" name="add_task">Tambah</button>
     </form>
-    </form>
+    
 
     
 
@@ -132,7 +131,12 @@ ORDER BY categories.namacategories;")
                 <tr>
                     <td><?php echo $no++; ?></td>
                     <td><?php echo $row['tasks']; ?></td>
-                    <td></td>
+                    <td><?php                
+                    $sql_categories2 = mysqli_query($koneksi, "SELECT namacategory FROM categories WHERE categoriesid='$categoriesid'");
+                    while ($data_categories2 = mysqli_fetch_array($sql_categories2)) { ?> 
+                    <?php echo $data_categories2['namacategory'] ?>
+                    <?php } ?>
+                    </td>
                     <td>
                         <?php
                         if ($row['priority'] == 1) {
