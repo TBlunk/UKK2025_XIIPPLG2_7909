@@ -44,7 +44,7 @@ t.username, t.email, t.nama");
     </nav>
     <div class="container">
     <h1 class="text-left text-info  mt-3">Profile Pengguna</h1>
-        <div class="card mt-3" style="width: 30rem;">
+        <div class="card mt-3" style="width: 20rem;">
             <ul class="list-group list-group-flush">
                 <?php
             
@@ -57,6 +57,7 @@ t.username, t.email, t.nama");
                     $email = $data['email']
                     
                 ?>
+                    <img src="../view/img/profiledummy.webp" class="img-thumbnail w-100" alt="...">
                     <li class="list-group-item">Username : <?php echo $data['username'] ?> </li>
                     <li class="list-group-item">Nama : <?php echo $data['nama'] ?></li>
                     <li class="list-group-item">Email : <?php echo $data['email'] ?></li>
