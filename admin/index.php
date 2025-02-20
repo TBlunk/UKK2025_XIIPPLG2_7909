@@ -42,13 +42,19 @@ if (isset($_GET['delete'])) {
     header('Location:index.php');
 }
 
-$result = mysqli_query($koneksi,"SELECT * FROM task
-ORDER BY status ASC, priority DESC, due_date ASC");
+$searchTerm = '';
+if (isset($_POST['search'])) {
+    $searchTerm = $koneksi->real_escape_string($_POST['search']);
+}
 
-$leftjoin = mysqli_query($koneksi,"SELECT categories.'namacategory', task.'categoriesid'
-FROM categories
-LEFT JOIN task ON categories.'categoriesid' = task.'categoriesid'
-ORDER BY categories.'namacategories';")
+
+$result = mysqli_query($koneksi,"SELECT t.id AS id, t.userid, t.tasks, t.status, t.priority, t.due_date, c.namacategory 
+          FROM task t 
+          LEFT JOIN categories c ON t.categoriesid = c.categoriesid 
+          WHERE c.namacategory LIKE '%$searchTerm%' 
+             OR t.tasks LIKE '%$searchTerm%' 
+             OR t.userid LIKE '%$searchTerm%' 
+          ORDER BY t.status ASC, t.priority DESC, t.due_date ASC");
 
 ?>
 <!DOCTYPE html>
@@ -72,7 +78,10 @@ ORDER BY categories.'namacategories';")
         <div class="navbar-nav me-auto">
             <a href="categories.php" class="nav-link text-light mb-2">Categories</a>           
         </div>
+
+        <a href="/UKK2025_XIIPPLG2_7909/admin/profile.php" class="btn btn-outline-light btn-info m-1">Profile</a>
             <a href="../config/aksi_logout.php" class="btn btn-outline-light btn-secondary m-1">Keluar</a>
+            
         </div>
     </div>
 </nav>
@@ -108,7 +117,10 @@ ORDER BY categories.'namacategories';")
         <button type="submit" class="btn btn-success w-100 mt-2" name="add_task">Tambah</button>
     </form>
     
-
+    <form method="POST" action="" class="mb-2 d-flex">
+    <input class="form-control me-2" type="text" name="search" placeholder="Cari berdasarkan nama task" value="<?php echo htmlspecialchars($searchTerm); ?>">
+    <input class="btn btn-success" type="submit" value="Search">
+    </form>
     
 
     <table class="table table-striped table-info">
@@ -125,17 +137,16 @@ ORDER BY categories.'namacategories';")
         </thead>
         <tbody>
             <?php
+            $sql = mysqli_query($koneksi, "SELECT * FROM categories 
+            WHERE userid='$userid'");
+                while ($data = mysqli_fetch_array($sql)) {    
             if (mysqli_num_rows($result) > 0) {
                 $no =1;
                 while($row = mysqli_fetch_assoc($result)) { ?>
                 <tr>
                     <td><?php echo $no++; ?></td>
                     <td><?php echo $row['tasks']; ?></td>
-                    <td><?php                
-                    $sql_categories2 = mysqli_query($koneksi, "SELECT namacategory FROM categories WHERE categoriesid='$categoriesid'");
-                    while ($data_categories2 = mysqli_fetch_array($sql_categories2)) { ?> 
-                    <?php echo $data_categories2['namacategory'] ?>
-                    <?php } ?>
+                    <td><?php echo $row['namacategory']; ?>
                     </td>
                     <td>
                         <?php
@@ -167,6 +178,7 @@ ORDER BY categories.'namacategories';")
                 </tr>
                 <?php }
             }
+        }
             ?>
             <tr>
 
@@ -176,10 +188,6 @@ ORDER BY categories.'namacategories';")
 
 
 
-
-<footer class="d-flex justify-content-center border-top mt-3 bd-light fixed-bottom" >
-    <p class="mt-3">&copy; UKK PPLG | Ridho Alfath N.</p>
-</footer>
 
     <script src="view/js/bootstrap.min.js"></script>
 </body>

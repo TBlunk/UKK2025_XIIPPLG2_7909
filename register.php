@@ -34,6 +34,8 @@
                     <form action="config/aksi_register.php" method="POST" class="text-dark">
                         <label class="form-label">Username</label>
                         <input type="text" name="username" class="form-control" required>
+                        <label class="form-label">Nama</label>
+                        <input type="text" name="nama" class="form-control" required>    
                         <label class="form-label">Password</label>
                         <input type="password" name="password" class="form-control" required>
                         <label class="form-label">Email</label>

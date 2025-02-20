@@ -23,14 +23,11 @@ if (isset($_POST['tambahct'])) {
 }
 
 
-if (isset($_POST['hapus'])) {
-    $categoriesid = $_POST['categoriesid'];
-
-    $sql = mysqli_query($koneksi, "DELETE FROM categories WHERE categoriesid='$categoriesid'");
+if (isset($_GET['delete'])) {
+    $categoriesid = $_GET['delete'];
+    mysqli_query($koneksi, "DELETE FROM category WHERE categoriesid=$categoriesid");
+    echo "<script>alert('Data Berhasil Dihapus');</script>";
+    header('Location:index.php');
 }
 
-    echo "<script>
-    alert('Data Berhasil dihapus!');
-    location.href='../admin/categories.php';
-    </script>";
 ?>

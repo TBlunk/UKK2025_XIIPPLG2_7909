@@ -3,12 +3,14 @@ session_start();
 $userid = $_SESSION['userid'];
 include '../config/koneksi.php';
 
+
 if ($_SESSION['status'] != 'login') {
     echo "<script>
     alert('Anda belum Login!');
     location.href='../index.php';
     </script>";
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +34,10 @@ if ($_SESSION['status'] != 'login') {
         <div class="navbar-nav me-auto">          
             <a href="categories.php" class="nav-link text-light mb-2">Categories</a>           
         </div>
+
+        <a href="/UKK2025_XIIPPLG2_7909/admin/profile.php" class="btn btn-outline-light btn-info m-1">Profile</a>
             <a href="../config/aksi_logout.php" class="btn btn-outline-light btn-secondary m-1">Keluar</a>
+            
         </div>
     </div>
 </nav>
@@ -66,7 +71,7 @@ if ($_SESSION['status'] != 'login') {
                                     <th>Nama Categories</th>
                                     <th>Deskripsi</th>
                                     <th>Tanggal</th>
-                                    <th>Aksi</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,34 +87,7 @@ if ($_SESSION['status'] != 'login') {
                                         <td><?php echo $data['namacategory'] ?></td>
                                         <td><?php echo $data['deskripsi'] ?></td>
                                         <td><?php echo $data['tanggaldibuat'] ?></td>
-                                        <td>
-
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#hapus<?php echo $data['categoriesid'] ?>">
-                                                Hapus
-                                            </button>
-                                            <div class="modal fade" id="hapus<?php echo $data['categoriesid'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Hapus Data</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form action="../config/aksi_categories.php" method="POST">
-                                                                <input type="hidden" name="categoriesid" value="<?php echo $data['categoriesid'] ?>">
-                                                                Apakah anda yakin akan menghapus data <strong> <?php echo $data['namacategories'] ?>"
-                                                                </strong> ?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="submit" name="hapus" class="btn btn-primary">Hapus Data</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </td>
+                                        
                                     </tr>
                                 <?php } ?>
                                 </tbody>
