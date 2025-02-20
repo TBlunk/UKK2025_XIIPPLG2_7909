@@ -29,7 +29,7 @@
             <div class="card">
                 <div class="card-body bg-info text-light">
                     <div class="text-center text-dark">
-                        <h5>Registrasi Akun Baru Website</h5>
+                        <h5>Registrasi Akun Baru App</h5>
                     </div>
                     <form action="config/aksi_register.php" method="POST" class="text-dark">
                         <label class="form-label">Username</label>
