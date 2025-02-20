@@ -117,7 +117,7 @@ $result = mysqli_query($koneksi,"SELECT t.id AS id, t.userid, t.tasks, t.status,
         <button type="submit" class="btn btn-success w-100 mt-2" name="add_task">Tambah</button>
     </form>
     
-    <form method="POST" action="" class="mb-2 d-flex">
+    <form method="POST" action="" class="mb-3 d-flex">
     <input class="form-control me-2" type="text" name="search" placeholder="Cari berdasarkan nama task" value="<?php echo htmlspecialchars($searchTerm); ?>">
     <input class="btn btn-success" type="submit" value="Search">
     </form>
@@ -151,20 +151,20 @@ $result = mysqli_query($koneksi,"SELECT t.id AS id, t.userid, t.tasks, t.status,
                     <td>
                         <?php
                         if ($row['priority'] == 1) {
-                            echo "Kurang Penting";
+                            echo '<button class="btn btn-sm text-dark btn-outline-success" disabled>Kurang Penting</button>';
                         }elseif($row['priority'] == 2) {
-                            echo "Penting";
+                            echo '<button class="btn btn-sm text-dark btn-outline-warning" disabled>Penting</button>';
                         }else{
-                            echo "Sangat Penting";
+                            echo '<button class="btn btn-sm text-dark btn-outline-danger" disabled>Sangat Penting</button>';
                         }
                         ?>
                     </td>
                     <td><?php echo $row['due_date']; ?></td>
                     <td> <?php
                     if ($row['status'] == 0) {
-                            echo "Belum Selesai";
+                            echo '<button class="btn btn-sm btn-warning" disabled><i class="fa-regular fa-clipboard"></i>  Belum Selesai   </button>';
                         }else{
-                            echo "Selesai";
+                            echo '<button class="btn btn-sm btn-info" disabled><i class="fa-solid fa-check"></i>   Selesai  </button>';
                         }
                         ?></td>
                     <td>
@@ -187,6 +187,10 @@ $result = mysqli_query($koneksi,"SELECT t.id AS id, t.userid, t.tasks, t.status,
     </table>
 
 
+
+    <footer class=" d-flex justify-content-left mt-3 bd-light fixed-bottom" >
+    <p class="m-2">&copy; UKK PPLG 2025 | Ridho Alfath N.</p>
+</footer>
 
 
     <script src="view/js/bootstrap.min.js"></script>

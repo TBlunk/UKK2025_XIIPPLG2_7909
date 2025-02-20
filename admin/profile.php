@@ -43,7 +43,7 @@ t.username, t.email, t.nama");
         </div>
     </nav>
     <div class="container">
-        <div class="card mt-5" style="width: 40rem;">
+        <div class="card mt-5" style="width: 30rem;">
             <ul class="list-group list-group-flush">
                 <?php
             
@@ -69,8 +69,8 @@ t.username, t.email, t.nama");
                     ?>
                         
 
-<footer class="d-flex justify-content-center border-top mt-3 bd-light fixed-bottom">
-    <p class="mt-3">&copy; UKK PPLG | Ridho Alfath N.</p>
+<footer class="d-flex justify-content-center border-top mt-3 bg-light fixed-bottom">
+    <p class="mt-3">&copy; UKK PPLG 2025 | Ridho Alfath N.</p>
 </footer>
 
 <script src="view/js/bootstrap.min.js"></script>

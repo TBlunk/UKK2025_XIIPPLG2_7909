@@ -93,8 +93,8 @@ if ($_SESSION['status'] != 'login') {
                                 </tbody>
                         </table>
                             
-<footer class="d-flex justify-content-center border-top mt-3 bd-light fixed-bottom" >
-    <p class="mt-3">&copy; UKK PPLG | Ridho Alfath N.</p>
+<footer class="position-fixed d-flex justify-content-center border-top mt-3 bg-light fixed-bottom" >
+    <p class="mt-3">&copy; UKK PPLG 2025 | Ridho Alfath N.</p>
 </footer>
 
     <script src="view/js/bootstrap.min.js"></script>
