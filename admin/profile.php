@@ -43,7 +43,8 @@ t.username, t.email, t.nama");
         </div>
     </nav>
     <div class="container">
-        <div class="card mt-5" style="width: 30rem;">
+    <h1 class="text-left text-info  mt-3">Profile Pengguna</h1>
+        <div class="card mt-3" style="width: 30rem;">
             <ul class="list-group list-group-flush">
                 <?php
             
@@ -59,9 +60,10 @@ t.username, t.email, t.nama");
                     <li class="list-group-item">Username : <?php echo $data['username'] ?> </li>
                     <li class="list-group-item">Nama : <?php echo $data['nama'] ?></li>
                     <li class="list-group-item">Email : <?php echo $data['email'] ?></li>
-            </ul>
-            <a href="index.php" class="btn btn-outline-light btn-secondary m-2 w-50">Back</a>
+                </ul>
+                <a href="index.php" class="btn btn-outline-light btn-secondary m-2 w-50">Back</a>
         </div>
+        
     </div>
 <?php }
                         
