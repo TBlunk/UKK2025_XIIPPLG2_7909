@@ -137,7 +137,7 @@ $result = mysqli_query($koneksi,"SELECT t.id AS id, t.userid, t.tasks, t.status,
         </thead>
         <tbody>
             <?php
-            $sql = mysqli_query($koneksi, "SELECT * FROM categories 
+            $sql = mysqli_query($koneksi, "SELECT * FROM task
             WHERE userid='$userid'");
                 while ($data = mysqli_fetch_array($sql)) {    
             if (mysqli_num_rows($result) > 0) {
